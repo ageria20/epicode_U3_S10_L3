@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Carousel, Row, Col, Image } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
 
 class GalleryGridItem extends Component {
   state = {
@@ -35,7 +36,7 @@ class GalleryGridItem extends Component {
               {this.state.films.slice(0, 4).map(film => {
                 return (
                   <Col md={3} key={film.imdbID}>
-                    <img className="img-fluid" src={film.Poster} alt={film.Title} />
+                    <Image className="img-fluid" src={film.Poster} alt={film.Title} />
                   </Col>
                 );
               })}
@@ -46,7 +47,7 @@ class GalleryGridItem extends Component {
               {this.state.films.slice(7, 11).map(film => {
                 return (
                   <Col md={3} key={film.imdbID}>
-                    <img className="img-fluid" src={film.Poster} alt={film.Title} />
+                    <Image className="img-fluid" src={film.Poster} alt={film.Title} />
                   </Col>
                 );
               })}
