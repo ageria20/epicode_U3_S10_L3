@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Image, Spinner, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Container, Row, Col, Image, Spinner, ListGroup, ListGroupItem, Alert } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 const MovieDetails = () => {
@@ -23,7 +23,12 @@ const MovieDetails = () => {
 
   const fetchMovieComments = async () => {
     try {
-      const resp = await fetch(`https://striveschool-api.herokuapp.com/api/comments/${moviedId}`);
+      const resp = await fetch(`https://striveschool-api.herokuapp.com/api/comments/${movieId}`, {
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjdkNmRlNDNhMzhjYjAwMTVmNjNkMmIiLCJpYXQiOjE3MTk0OTYxNjQsImV4cCI6MTcyMDcwNTc2NH0.cpIV-C6zAMmk9q3Pzvt6luuSrlNx09cvMsO45XsVsdg",
+        },
+      });
       if (resp.ok) {
         setComments(await resp.json());
       } else console.log("Errore nel reperimento dei dati");
@@ -39,17 +44,20 @@ const MovieDetails = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movieId]);
 
+  console.log(comments);
+  console.log(movieId);
+
   return (
     <>
       <Container>
         <Row>
           {film ? (
-            <>
-              <Col xs={12} ms={4}>
-                <Image src={film.Poster} />
+            <Row>
+              <Col xs={12} md={4}>
+                <Image src={film.Poster} className="w-100" />
               </Col>
-              <Col xs={12} ms={8}>
-                <h3>Title: {film.Title}</h3>
+              <Col xs={12} md={8}>
+                <h3>{film.Title}</h3>
                 <p>Year: {film.Year}</p>
                 <p>Released: {film.Released}</p>
                 <p>Duration: {film.Runtime}</p>
@@ -57,35 +65,34 @@ const MovieDetails = () => {
                 <p>Director: {film.Director}</p>
                 <p>Actors: {film.Actors}</p>
                 <p>Plot: {film.Plot}</p>
+                {comments.length > 0 ? (
+                  <Container className="mt-5">
+                    <h3>Commenti</h3>
+                    <ListGroup>
+                      {comments.map(comment => {
+                        return (
+                          <ListGroupItem key={comment._id}>
+                            <span>
+                              {comment.author} <strong>ha detto:</strong> {comment.comment}
+                            </span>
+                          </ListGroupItem>
+                        );
+                      })}
+                    </ListGroup>
+                  </Container>
+                ) : (
+                  <Container className="mt-5 px-0">
+                    <Alert variant="light">Non sono presenti commenti</Alert>
+                  </Container>
+                )}
               </Col>{" "}
-            </>
+            </Row>
           ) : (
             <Spinner animation="border" role="status" variant="info">
               <span className="visually-hidden">Loading...</span>
             </Spinner>
           )}
         </Row>
-      </Container>
-      <Container>
-        <Container>
-          <ListGroup>
-            {comments.length > 0 ? (
-              comments.map(comment => {
-                return (
-                  <ListGroupItem key={comment._id}>
-                    <span>
-                      {comment.author} <strong>ha detto:</strong> {comment.comment}
-                    </span>
-                  </ListGroupItem>
-                );
-              })
-            ) : (
-              <Spinner animation="border" role="status" variant="info">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            )}
-          </ListGroup>
-        </Container>
       </Container>
     </>
   );

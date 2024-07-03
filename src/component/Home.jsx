@@ -4,11 +4,11 @@ import Footer from "./Footer";
 
 const Home = () => {
   return (
-    <>
+    <Container>
       <Row className="d-flex justify-content-between align-items-center mx-5">
         <Col sm="12" md="6">
           <Row className=" container row align-items-center">
-            <Col sm="12">
+            <Col className="">
               <select className="form-select bg-black border border-white genres text-white" style={{ width: "150px" }}>
                 <option selected>Genres</option>
                 <option value="1">Trending Now</option>
@@ -46,20 +46,20 @@ const Home = () => {
           </svg>
         </Col>
       </Row>
-      <Container className="container-fluid">
+      <Container>
         <h3 className="mt-3">Trending Now</h3>
-        <GalleryGridItem filmName={"harry"} />
+        <GalleryGridItem filmName={"marvel"} />
       </Container>
-      <Container className="container-fluid">
+      <Container>
         <h3 className="mt-3">Watch it Again</h3>
-        <GalleryGridItem filmName={"game"} />
+        <GalleryGridItem filmName={"lord"} />
       </Container>
-      <Container className="container-fluid">
+      <Container>
         <h3 className="mt-3">New Realease</h3>
         <GalleryGridItem filmName={"hobbit"} />
       </Container>
       <Footer />
-    </>
+    </Container>
   );
 };
 export default Home;

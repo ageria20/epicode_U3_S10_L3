@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 
 const MyNav = () => {
   return (
-    <Navbar expand="lg" className=" container-fluid mx-0" bg="dark" variant="dark">
+    <Navbar expand="lg" className="container-fluid mx-0" bg="dark" variant="dark">
       <Container className="container-fluid">
         <Navbar.Brand href="#home">
           <img src={logoNetflix} alt="" style={{ width: "100px" }} />
